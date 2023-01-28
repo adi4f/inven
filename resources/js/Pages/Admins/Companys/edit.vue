@@ -161,7 +161,7 @@
                     </div>
                     <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
                         <jet-danger-button class="mr-2" 
-                            @click="deleteDate()" 
+                            @click="deleteData()" 
                             :class="{'opacity-25' : form.processing}"
                             :disabled="form.processing"
                         >
