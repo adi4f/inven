@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Admins;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
-use illuminate\Support\Facades\Validator;
+
 use App\Models\Company;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Validator;
 
 class CompanyController extends Controller
 {
@@ -37,7 +37,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admins/Companys/create');
     }
 
     /**
@@ -46,9 +46,30 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
-        //
+        Validator::make(Request::all(), [
+            'initial' => ['min:3', 'required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            
+        ])->validate('storeData');
+
+        $insert = Company::create([
+            'initial' => Request::get('initial'),
+            'description' => Request::get('description'),
+            'name' => Request::get('name'),
+            'address' => Request::get('address'),
+            'province' => Request::get('province'),
+            'city' => Request::get('city'),
+            'postal_code' => Request::get('postal_code'),
+            'web' => Request::get('web'),
+            'email' => Request::get('email'),
+            'telephone' => Request::get('telephone'),
+            'fax' => Request::get('fax'),
+        ]);
+
+        return Redirect::route('admin.companys.index');
     }
 
     /**
@@ -68,9 +89,24 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        return Inertia::render('Admins/Companys/edit', [
+            'editData' => [
+                'id' => $company->id,
+                'initial' => $company->initial,
+                'description' => $company->description,
+                'name' => $company->name,
+                'address' => $company->address,
+                'province' => $company->province,
+                'city' => $company->city,
+                'postal_code' => $company->postal_code,
+                'web' => $company->web,
+                'email' => $company->email,
+                'telephone' => $company->telephone,
+                'fax' => $company->fax,
+            ],
+        ]);
     }
 
     /**
@@ -80,9 +116,30 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Company $company)
     {
-        //
+        Validator::make(Request::all(), [
+            'initial' => ['min:3', 'required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255'],
+            
+        ])->validate('updateData');
+
+        $company->update([
+            'initial' => Request::get('initial'),
+            'description' => Request::get('description'),
+            'name' => Request::get('name'),
+            'address' => Request::get('address'),
+            'province' => Request::get('province'),
+            'city' => Request::get('city'),
+            'postal_code' => Request::get('postal_code'),
+            'web' => Request::get('web'),
+            'email' => Request::get('email'),
+            'telephone' => Request::get('telephone'),
+            'fax' => Request::get('fax'),
+        ]);
+
+        return Redirect::route('admin.companys.index');
     }
 
     /**
@@ -91,8 +148,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        
+        return Redirect::route('admin.companys.index');
     }
 }

@@ -5,10 +5,13 @@
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-                        </svg>
-
+                        <Link
+                            :href="route('admin.dashboards.index')"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                            </svg>
+                        </Link>
                     </li>
                     <li>
                         <div class="flex items-center">
@@ -16,7 +19,11 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
-                                Companys
+                                <Link
+                                    :href="route('admin.companys.index')"
+                                >                                
+                                    Companys
+                                </Link>
                             </div>                            
                         </div>                        
                     </li>
@@ -33,9 +40,11 @@
                 <div class="relative rounded-md shadow-sm">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <div class="text-grey-500 sm:text-sm">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-                            </svg>
+                            
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                                </svg>
+                          
                         </div>
                     </div>
 
@@ -47,6 +56,8 @@
                             block w-full pl-7 pr-12
                             sm:text-sm border-gray-300 rounded-md                        
                         "
+                        placeholder="search"
+                        v-model="form.search"
                     />
 
                     <!-- select option paginate -->
@@ -57,7 +68,9 @@
                             h-full py-0 pl-2 pr-7 border-transparent bg-transparent
                             text-gray-500
                             sm:text-sm rounded-md
-                        ">
+                        "
+                        v-model="form.per_page"
+                        >
                             <option>5</option>
                             <option>10</option>
                             <option>50</option>
@@ -70,7 +83,11 @@
                 </div>
             </div>
             <jet-button class="w-full lg:w-auto text-center mb-2 lg:mb-0">
-                Create
+                <Link
+                    :href="route('admin.companys.create')"
+                >
+                    Create
+                </Link>
             </jet-button>
         </div>
 
@@ -79,7 +96,7 @@
             <div class="bg-white">
                 <div class="pt-2">
                     <!-- Product info -->
-                    <div class="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-2 lg:px-0 lg:pt-2 lg:pb-24">
+                    <div class="max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-2 lg:px-0 lg:pt-2 lg:pb-24">
                     <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-2">
                         <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">{{ company.name }}</h1>
                     </div>
@@ -131,9 +148,12 @@
                             </div>
                         </div>
     
-                        <div class="mt-10">
-                        
-                            <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button>
+                        <div class="mt-2">
+                            <Link
+                                :href="route('admin.companys.edit', company.id)"
+                            >
+                                <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button>
+                        </Link>
                         </div>
                     </div>
     
@@ -164,7 +184,7 @@
 
 
         <!-- Pagination -->
-        <div class="bg-white px-3 py-1 fle items-center justify-between border-t border-gray-200 sm:px-3">
+        <div class="bg-white px-3 py-1 flex items-center justify-between border-t border-gray-200 sm:px-3">
             <!-- Button -->
             <div class="flex-1 flex justify-between sm:hidden">
                 <button class="btn-pagination" :disable="companys.current_page <=1"
@@ -232,6 +252,7 @@ export default {
         
     },
     components: {
+        
         Link,
         AdminLayout,
         JetButton,

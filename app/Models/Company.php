@@ -33,7 +33,7 @@ class Company extends Model
                 ->orWhere('address','like','%' .$search. '%')
                 ->orWhere('province','like','%' .$search. '%')
                 ->orWhere('city','like','%' .$search. '%')
-                ->orWhere('postal','like','%' .$search. '%')
+                ->orWhere('postal_code','like','%' .$search. '%')
                 ->orWhere('web','like','%' .$search. '%')
                 ->orWhere('email','like','%' .$search. '%')
                 ->orWhere('telephone','like','%' .$search. '%')

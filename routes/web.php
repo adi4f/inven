@@ -40,7 +40,16 @@ Route::middleware([
 Route::prefix('admin')->name('admin.')->middleware(['auth:sanctum', 'verified'])->group(function() {
     Route::get('/',[DashboardController::class, 'index'])->name('dashboard.index');
 
+    Route::prefix('/dashboards')->name('dashboards.')->group(function() {
+        Route::get('/', [DashboardController::class, 'index'])->name('index');
+    });
+
     Route::prefix('companys')->name('companys.')->group(function(){
         Route::get('/',[CompanyController::class, 'index'])->name('index');
+        Route::get('/create',[CompanyController::class, 'create'])->name('create');
+        Route::post('/',[CompanyController::class, 'store'])->name('store');
+        Route::get('{company}/edit',[CompanyController::class, 'edit'])->name('edit');
+        Route::put('{company}',[CompanyController::class, 'update'])->name('update');
+        Route::put('{company}/delete',[CompanyController::class, 'destroy'])->name('destroy');
     });
 });
