@@ -28,74 +28,216 @@
         <hr class="border-gray-600 mt-2">
         <div class="overflow-auto h-screen flex flex-col justify-between flex-1 mt-1">
             <nav>
-                <!-- dashboard -->
-                <div class="nav-item mb-1
-                    flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
-                ">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
-                    </svg>
+                <!-- Dashboard -->
+                <div class="nav-item mb-1" >
+                    
+                    <Link 
+                        :href="route('dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('dashboard')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 7.125C2.25 6.504 2.754 6 3.375 6h6c.621 0 1.125.504 1.125 1.125v3.75c0 .621-.504 1.125-1.125 1.125h-6a1.125 1.125 0 01-1.125-1.125v-3.75zM14.25 8.625c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v8.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-8.25zM3.75 16.125c0-.621.504-1.125 1.125-1.125h5.25c.621 0 1.125.504 1.125 1.125v2.25c0 .621-.504 1.125-1.125 1.125h-5.25a1.125 1.125 0 01-1.125-1.125v-2.25z" />
+                        </svg>
 
-                    <span class="ml-2 font-medium">Dashboard</span>
-
+                        <span class="ml-2 font-medium">Dashboard</span>
+                    </Link>
                 </div>
+
+               
+
+                <!-- Purchasing -->
+                <div class="nav-item mb-1" v-if="can('manage purchasing')">
+                    
+                    <Link 
+                        :href="route('purchasing.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('purchasing.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Purchasing</span>
+                    </Link>
+                </div>
+                    <!-- Selling -->
+                <div class="nav-item mb-1" v-if="can('manage selling')">
+                    
+                    <Link 
+                        :href="route('selling.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('selling.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Selling</span>
+                    </Link>
+                </div>
+                <!-- Invoice -->
+                <div class="nav-item mb-1" v-if="can('manage invoice')">
+                    
+                    <Link 
+                        :href="route('invoice.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('invoice.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Invoice</span>
+                    </Link>
+                </div>
+                <!-- delivery -->
+                <div class="nav-item mb-1" v-if="can('manage delivery')">
+                    
+                    <Link 
+                        :href="route('delivery.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('delivery.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Delivery</span>
+                    </Link>
+                </div>
+                <!-- stock -->
+                <div class="nav-item mb-1" v-if="can('manage stock')">
+                    
+                    <Link 
+                        :href="route('stock.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('stock.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Stock</span>
+                    </Link>
+                </div>
+                <!-- Accounting -->
+                <div class="nav-item mb-1" v-if="can('manage accounting')">
+                    
+                    <Link 
+                        :href="route('accounting.dashboard')"
+                        class="nav-item"
+                        :class="
+                            route().current('accounting.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Accounting</span>
+                    </Link>
+                </div>
+
                 <!-- Admin -->
-                <div class="items-center mt-2 text-white mx-2 font-medium">
-                    <span class="font-bold">Admin</span>
-                </div>
-
-                <!-- users -->
-                <div class="nav-item mb-1
-                    flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
-                ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-
-
-                    <span class="ml-2 font-medium">Users</span>
-                </div>
-                <!-- Roles -->
-                <div class="nav-item mb-1
-                    flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
-                ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-                </svg>
-
-
-                    <span class="ml-2 font-medium">Roles</span>
-                </div>
-                <!-- Permissions -->
-                <div class="nav-item mb-1
-                    flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
-                ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
-                </svg>
-
-
-                    <span class="ml-2 font-medium">Permissions</span>
-                </div>
-                <!-- company -->
-                <div class="nav-item mb-1">
-                
-                <Link 
-                    :href="route('admin.companys.index')"
-                    class="nav-item"
-                    :class="
-                        route().current('admin.companys.*')
-                        ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
-                        : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
-                    "
-                >
+                <div v-if="can('admin')">
+                    <div class="items-center mt-2 text-white mx-2 font-medium">
+                        <span class="font-bold">Admins</span>
+                    </div>
+    
+                    <!-- users -->
+                    <div class="nav-item mb-1
+                        flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
+                    ">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
                     </svg>
-
-
-                        <span class="ml-2 font-medium">Company</span>
-                </Link>
+    
+    
+                        <span class="ml-2 font-medium">Users</span>
+                    </div>
+                    <!-- Roles -->
+                    <div class="nav-item mb-1">
+                        <Link
+                                                :href="route('admin.roles.index')" 
+                            class="nav-item" 
+                            :class="
+                                route().current('admin.roles.*')
+                                    ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                                    : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                            "
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                            </svg>
+            
+            
+                                <span class="ml-2 font-medium">Roles</span>
+                        </Link>
+                    </div>
+                    <!-- Permissions -->
+                    <div class="nav-item mb-1
+                        flex items-center px-2 py-1 text-white rounded-md transition-colors duration-200 transform hover:bg-gray-700
+                    ">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m0-10.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.75c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.75h-.152c-3.196 0-6.1-1.249-8.25-3.286zm0 13.036h.008v.008H12v-.008z" />
+                    </svg>
+    
+    
+                        <span class="ml-2 font-medium">Permissions</span>
+                    </div>
+                    <!-- company -->
+                    <div class="nav-item mb-1">
+                    
+                    <Link 
+                        :href="route('admin.companys.index')"
+                        class="nav-item"
+                        :class="
+                            route().current('admin.companys.*')
+                            ? 'flex items-center px-2 py-1 text-white rounded-md bg-blue-600'
+                            : 'flex items-center px-2 py-1 text-white transition-colors duration-200 transform rounded-md hover:bg-blue-600'
+                        "
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
+                        </svg>
+    
+    
+                            <span class="ml-2 font-medium">Company</span>
+                    </Link>
+                    </div>
                 </div>
             </nav>
         </div>
@@ -109,5 +251,11 @@ export default {
         Link,
     },
     props: ["openNav"],
+    methods: {
+        can(permission){
+            if (this.$page.props.auth.user.is_admin) return true; 
+            return this.$page.props.auth.user.permissions.includes(permission);
+        }   
+    }
 }
 </script>
