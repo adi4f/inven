@@ -1,0 +1,21 @@
+Git Bush:
+Kosongkan Account:
+- git credential-manager delete https://github.com
+
+Push/commit repository:
+- git config --global user.name "Adi4f"
+- git config --global user.email "mabal27@gmail.com"
+- git init \\membuat folder git di project
+- git status
+- git add . (. untuk semua file)
+- git commit -m "initial commit" //untuk comment
+- git remote add origin Link Folder di github
+- git push -u origin master
+- diminta untuk login github
+
+ Masuk folder Main
+- git branch main master -f
+- git checkout main
+- git push -u origin main // Push ke folder main
+
+

@@ -296,11 +296,11 @@
 
 <script>
 import { Link } from "@inertiajs/inertia-vue3";
-import AdminLayout from "@/Layouts/AdminLayout";
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 import JetButton from "@/Components/PrimaryButton.vue";
-import Pagination from "@/Components/Pagination";
+import Pagination from "@/Components/Pagination.vue";
 import Button from "../../../Components/PrimaryButton.vue";
-import SortIndicator from "@/Components/SortIndicator";
+import SortIndicator from "@/Components/SortIndicator.vue";
 
 export default {
     created () {
