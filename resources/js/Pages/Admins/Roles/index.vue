@@ -142,8 +142,8 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
                                         <div class="text-sm text-gray-900">
-                                            <!-- <span v-for="role_has_permission in role.role_has_permissions"> -->
-                                                <span>
+                                            <span v-for="role_has_permission in role.role_has_permissions" v-bind:key="role_has_permission.permissions.id">
+                                                <!-- <span> -->
                                                 <div
                                                     class="
                                                         uppercase
