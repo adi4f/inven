@@ -6,6 +6,10 @@ use Inertia\Inertia;
 use App\Http\Controllers\Admins\DashboardController;
 use App\Http\Controllers\Admins\CompanyController;
 use App\Http\Controllers\Admins\RoleController;
+use App\Http\Controllers\Admins\UserController;
+
+
+
 
 
 // new route
@@ -33,6 +37,14 @@ Route::middleware([
             Route::delete('{role}/delete', [RoleController::class, 'destroy'])->name('destroy');
         });
         
+        Route::prefix('users')->name('users.')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('index');
+            Route::get('/create', [UserController::class, 'create'])->name('create');
+            Route::post('/', [UserController::class, 'store'])->name('store');
+            Route::get('{user}/edit', [UserController::class, 'edit'])->name('edit');
+            Route::put('{user}', [UserController::class, 'update'])->name('update');
+            Route::delete('{user}/delete', [UserController::class, 'destroy'])->name('destroy');
+        });
         
     });  
     

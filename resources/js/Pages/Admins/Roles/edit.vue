@@ -112,7 +112,7 @@ import JetInputError from "@/Components/InputError.vue";
 import JetLabel from "@/Components/InputLabel.vue";
 import JetActionMessage from "@/Components/ActionMessage.vue";
 import { Link } from '@inertiajs/inertia-vue3';
-import AdminLayout from "@/Layouts/AdminLayout";
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 export default {
     created () {
