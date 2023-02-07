@@ -67,5 +67,34 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
+    public function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = Hash::needsRehash($password) ? Hash::make($password) : $password;
+    }
+
+    public function scopeFilter($query, array $filters)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                ->orWhere('email','like','%' . $search. '%');
+            });
+        })->when($filters['role'] ?? null, function ($query, $role) {
+            $query->whereHas('roles', function($query) use ($role) {
+                $query->where('name', $role);
+            });
+        });
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['created_at'])->diffForHumans();
+    }
+
+    public function getUpdateCreatedAtAttribute()
+    {
+        return \Carbon\Carbon::parse($this->attributes['updated_at'])->diffForHumans();
+    }
+
 }
 

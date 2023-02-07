@@ -21,9 +21,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('Admins/Users/index');
+        $query = User::with(['roles'])->filter($request->only('search', 'role'));
+        if ($request->has('sort_by')) {
+            $query = $query->orderBy($request->input('sort_by'), $request->input('sort_dir', 'asc'));
+        }
+
+        return Inertia::render('Admins/Users/index', [
+            'filters' => $request->all('search', 'role', 'per_page', 'sort_by', 'sort_dir'),
+            'users' => $query->paginate($request->input('per_page', 10))
+        ]);
     }
 
     /**
