@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use illuminate\support\facades\Redirect;
 use illuminate\Validation\Rule;
-use illuminate\support\facades\Validator;
+use Illuminate\Support\Facades\Validator;
 use spatie\Permission\Models\Role;
 use Inertia\Inertia;
 
@@ -41,7 +41,9 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admins/Users/create', [
+            'roles' => Role::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -52,7 +54,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validateWithBag('storeData', [        
+            'name' => ['required', 'max:255', 'string'],
+            'email' => ['required', 'max:255', 'email'],
+            'password' => ['required']
+        ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            
+            'guard_name' => 'web',
+        ]);
+
+        if ($request->get('roles')) {
+            $user->syncRoles($request->roles);
+        }
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -72,9 +91,18 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return Inertia::render('Admins/Users/edit', [
+            'editData' => [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => $user->password,
+                'roles' => $user->roles->pluck('name'),
+            ],
+            'roles' => Role::orderBy('name')->get(),
+        ]);
     }
 
     /**
@@ -84,9 +112,23 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user, Request $request)
     {
-        //
+        $request->validateWithBag('updateData', [        
+            'name' => ['required', 'max:255', 'string'],
+            'email' => ['required', 'max:255', 'email'],
+            'password' => ['required']
+        ]);
+
+        $user->update($request->only('name'));
+        $user->update($request->only('email'));
+        $user->update($request->only('password'));
+
+        if ($request->get('roles')) {
+            $user->syncRoles($request->roles);
+        }
+
+        return redirect()->route('admin.users.index');
     }
 
     /**
@@ -95,8 +137,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        return redirect()->route('admin.users.index');
     }
 }

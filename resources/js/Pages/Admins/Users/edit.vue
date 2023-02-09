@@ -1,26 +1,173 @@
-
-
 <template>
     <admin-layout>
-         Dashboard
+        <!-- breadcrumb items -->
+        <div>
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <Link
+                            :href="route('dashboard')"
+                        >
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                        </Link>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                            <div class= "text-gray-700 ml-1 md:ml-2 text-sm font-medium">
+                                <Link
+                                    :href="route('admin.users.index')"
+                                >
+                                    Users
+                                </Link>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                            <div class= "text-gray-700 ml-1 md:ml-2 text-sm font-medium">
+                                <Link
+                                    :href="route('admin.users.create')"
+                                >
+                                    Edit
+                                </Link>
+                            </div>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+
+            <!-- breadcrumb header -->
+            <div class="text-3xl font-bold mt-2 mb-2">
+                Edit User
+            </div>
+        </div>
+
+        <div class="mt-10 sm:mt-0">
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">
+                            User
+                        </h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                            This information will be displayed publicly so be careful what you share.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                <form @submit.prevent="updateData">
+                    <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-6">
+                                    <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                                    <input type="text" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        v-model="form.name"
+                                        autofocus
+                                    />
+                                    <jet-input-error :message="form.errors.name" class="mt-2" />
+                                </div>
+                                <div class="col-span-6 sm:col-span-6">
+                                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                                    <input type="email" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        v-model="form.email"
+                                        autofocus
+                                    />
+                                    <jet-input-error :message="form.errors.email" class="mt-2" />
+                                </div>
+                                <div class="col-span-6 sm:col-span-6">
+                                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                                    <input type="password" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        v-model="form.password"
+                                        autofocus
+                                    />
+                                    <jet-input-error :message="form.errors.password" class="mt-2" />
+                                </div>
+                                <div class="col-span-6 sm:col-span-6">
+                                    <label for="initial" class="block text-sm font-medium text-gray-700">Role(s)</label>
+                                    <div v-for="role in roles" v-bind:key="role.id" class="flex items-center mr-4 mb-2">
+                                            <input :id="'role-' + role.id" :value="role.name" v-model="form.roles"
+                                                type="checkbox"
+                                                class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out">
+                                            <label :for="'role-' + role.id"
+                                                class="ml-2 text-sm leading-5 font-medium text-gray-700">
+                                                {{ role.name }}
+                                            </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
+                            <jet-button
+                                :class="{ 'opacity-25': form.processing }"
+                                :disabled="form.processing"
+                            >
+                                Update
+                            </jet-button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
     </admin-layout>
- </template>
- 
- <script>
-     import { useForm } from '@inertiajs/inertia-vue3';
-     import { Link } from '@inertiajs/inertia-vue3';
-     import AdminLayout from '@/Layouts/AdminLayout.vue';
- 
- export default {
-     created() {
-         document.title = "Test1";
-     },
-     components: {
-         AdminLayout,
-         Link
-     },
- }
- </script>
- 
- 
- 
+</template>
+
+<script>
+import JetButton from "@/Components/PrimaryButton.vue";
+import JetInput from "@/Components/TextInput.vue";
+import JetInputError from "@/Components/InputError.vue";
+import JetLabel from "@/Components/InputLabel.vue";
+import JetActionMessage from "@/Components/ActionMessage.vue";
+import { Link } from '@inertiajs/inertia-vue3';
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+
+export default {
+    created () {
+        document.title = "Edit User";
+    },
+    components: {
+        JetButton,
+        JetInput,
+        JetInputError,
+        JetLabel,
+        JetActionMessage,
+        Link,
+        AdminLayout
+    },
+    props: {
+        editData: Object,
+        roles: Array,
+    },
+    data() {
+        return {
+            form: this.$inertia.form({
+                '_method': 'PUT',
+                id: this.editData.id,
+                name: this.editData.name,
+                email: this.editData.email,
+                password: this.editData.password,
+                terms: false,
+                roles: this.editData.roles,
+            }),
+        }
+    },
+    methods: {
+        updateData() {
+            this.form.post(this.route('admin.users.update', this.editData.id), {
+                errorBag: 'updateData',
+            });
+        },
+        
+    },
+
+}
+</script>

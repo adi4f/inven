@@ -91,7 +91,7 @@ class User extends Authenticatable
         return \Carbon\Carbon::parse($this->attributes['created_at'])->diffForHumans();
     }
 
-    public function getUpdateCreatedAtAttribute()
+    public function getUpdatedAtAttribute()
     {
         return \Carbon\Carbon::parse($this->attributes['updated_at'])->diffForHumans();
     }
