@@ -1,7 +1,7 @@
 <template>
     <admin-layout>
          <!-- breadcrumb items -->
-        <div>
+        <div class="print:hidden">
             <nav class="flex" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -283,7 +283,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mt-2">
+                                                    <div class="mt-2 print:hidden">
                                                         <div class="flex justify-start">
                                                             <Link :href="route('admin.users.edit', user.id)">
                                                                 <button type="submit" class="mr-1 mt-2 w-full bg-gray-900 border border-transparent rounded-md py-1 px-1 flex item-center justify-center text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800">
@@ -328,7 +328,7 @@
 
 
         <!-- pagination -->
-        <div class="bg-white px-3 py-1 flex items-center justify-between border-t border-gray-200 sm:px-3">
+        <div class="bg-white px-3 py-1 flex items-center justify-between border-t border-gray-200 sm:px-3 print:hidden">
             <!-- button -->
             <div class="flex-1 flex justify-between sm:hidden">
                 <button class="btn-pagination" :disabled="users.current_page <= 1"
