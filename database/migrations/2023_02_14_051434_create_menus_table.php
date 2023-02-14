@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('icon');
             $table->bigInteger('main_menu')->nullable();
             $table->integer('sort')->default(0);
-            $table->string('sort')->default(0);
+            $table->string('permission')->nullable();
             $table->timestamps();
         });
     }
