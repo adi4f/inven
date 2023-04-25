@@ -21,7 +21,7 @@
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
                                 <Link
-                                    :href="route('admin.companys.index')"
+                                    :href="route('companys.index')"
                                 >                                
                                 Companys
                                 </Link>
@@ -35,7 +35,7 @@
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
                                 <Link
-                                    :href="route('admin.companys.create')"
+                                    :href="route('companys.create')"
                                 >                                
                                 Create
                                 </Link>
@@ -176,7 +176,7 @@
 </template>
 
 <script>
-import { defineComponent, DefineComponent } from 'vue';
+
 import JetButton from "@/Components/PrimaryButton.vue";
 import JetInput from "@/Components/TextInput.vue";
 import JetInputError from "@/Components/InputError.vue";
@@ -185,9 +185,9 @@ import JetActionMessage from "@/Components/ActionMessage.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
-export default defineComponent ({
+export default ({
     created () {
-        document.title = "Companys";
+        document.title = "Company";
     },
     components: {
         JetButton,
@@ -217,7 +217,7 @@ export default defineComponent ({
     },
     methods: {
         storeData() {
-            this.form.post(this.route('admin.companys.store'), {
+            this.form.post(this.route('companys.store'), {
                 errorBag: 'storeData',
                 preserveScroll:true,
             })

@@ -21,7 +21,7 @@
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
                                 <Link
-                                    :href="route('admin.companys.index')"
+                                    :href="route('companys.index')"
                                 >                                
                                 Companys
                                 </Link>
@@ -35,7 +35,7 @@
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
                                 <Link
-                                    :href="route('admin.companys.edit', form.id)"
+                                    :href="route('companys.edit', form.id)"
                                 >                                
                                 Edit
                                 </Link>
@@ -159,11 +159,12 @@
                             
                         </div>
                     </div>
-                    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6">
+                    <div class="bg-gray-50 px-4 py-3 text-right sm:px-6" >
                         <jet-danger-button class="mr-2" 
                             @click="deleteData()" 
                             :class="{'opacity-25' : form.processing}"
                             :disabled="form.processing"
+                            v-if="can.delete"
                         >
                             Delete
                         </jet-danger-button>
@@ -171,6 +172,7 @@
                         <jet-button
                             :class="{ 'opacity-25': form.processing }"
                             :disable="form.processing"
+                            v-if="can.update"
                             >
                             Update
                         </jet-button>
@@ -184,11 +186,9 @@
 </template>
 
 <script>
-import { useForm } from "@inertiajs/inertia-vue3";
-import { defineComponent, DefineComponent } from 'vue';
+
 import JetButton from "@/Components/PrimaryButton.vue";
 import JetDangerButton from "@/Components/DangerButton.vue";
-
 import JetInput from "@/Components/TextInput.vue";
 import JetInputError from "@/Components/InputError.vue";
 import JetLabel from "@/Components/InputLabel.vue";
@@ -196,9 +196,9 @@ import JetActionMessage from "@/Components/ActionMessage.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 
-export default defineComponent ({
+export default ({
     created () {
-        document.title = "Companys";
+        document.title = "Company";
     },
     components: {
         JetButton,
@@ -212,6 +212,7 @@ export default defineComponent ({
     },
     props: {
         editData: Object,
+        can: Object,
     },
     data() {
         return {
@@ -237,13 +238,13 @@ export default defineComponent ({
     },
     methods: {
         updateData() {
-            this.form.post(this.route('admin.companys.update', this.editData.id), {
+            this.form.post(this.route('companys.update', this.editData.id), {
                 errorBag: 'updateData'
             })
         },
         deleteData() {
             if(!confirm("Are you sure want to delete this?")) return;
-                this.form.post(this.route('admin.companys.destroy', this.editData.id), 
+                this.form.post(this.route('companys.destroy', this.editData.id), 
                 {
                     errorBag: 'deleteData'
                 });

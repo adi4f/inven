@@ -20,7 +20,7 @@
                             </svg>
                             <div class="text-gray-700 ml-1 md:ml-2 text-sm ont-medium">
                                 <Link
-                                    :href="route('admin.companys.index')"
+                                    :href="route('companys.index')"
                                 >                                
                                     Companys
                                 </Link>
@@ -82,9 +82,9 @@
 
                 </div>
             </div>
-            <jet-button class="w-full lg:w-auto text-center mb-2 lg:mb-0">
+            <jet-button class="w-full lg:w-auto text-center mb-2 lg:mb-0" v-if="can.create">
                 <Link
-                    :href="route('admin.companys.create')"
+                    :href="route('companys.create')"
                 >
                     Create
                 </Link>
@@ -148,9 +148,9 @@
                             </div>
                         </div>
     
-                        <div class="mt-2">
+                        <div class="mt-2" v-if="can.update">
                             <Link
-                                :href="route('admin.companys.edit', company.id)"
+                                :href="route('companys.edit', company.id)"
                             >
                                 <button type="submit" class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Edit</button>
                         </Link>
@@ -249,7 +249,7 @@ import Button from "../../../Components/PrimaryButton.vue";
 
 export default {
     created () {
-        
+        document.title = "Company";
     },
     components: {
         
@@ -262,6 +262,8 @@ export default {
     props: {
         filters: Object,
         companys: Object,
+        can: Object,
+        
     },
     data() {
         return{
@@ -280,7 +282,7 @@ export default {
             handler: _.throttle(function () {
                 let query = _.pickBy(this.form);
                 this.$inertia.get(
-                    this.route("admin.companys.index"),
+                    this.route("companys.index"),
                     Object.keys(query).length ? query : { remember: "forget"},
                     { preserveState: true}
                 );

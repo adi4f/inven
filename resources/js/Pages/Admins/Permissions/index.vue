@@ -20,9 +20,9 @@
                             </svg>
                             <div class= "text-gray-700 ml-1 md:ml-2 text-sm font-medium">
                                 <Link
-                                    :href="route('admin.roles.index')"
+                                    :href="route('admin.permissions.index')"
                                 >
-                                    Roles
+                                    permissions
                                 </Link>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
 
             <!-- breadcrumb header -->
             <div class="text-3xl font-bold mt-2 mb-2 print:hidden">
-                Roles
+                permissions
             </div>
         </div>
 
@@ -85,7 +85,7 @@
 
             <jet-button class="w-full lg:w-auto text-center mb-2 lg:mb-0">
                 <Link
-                    :href="route('admin.roles.create')"
+                    :href="route('admin.permissions.create')"
                 >
                     Create
                 </Link>
@@ -107,7 +107,7 @@
                                                 justify-between
                                             "
                                         >
-                                            <span>Role</span
+                                            <span>permission</span
                                             >
                                             <sort-indicator
                                                 field="name"
@@ -116,7 +116,7 @@
                                             />
                                         </div>
                                     </th>
-                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell table-header">Permissions</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell table-header">Roles</th>
                                     <th scope="col" class="relative px-6 py-3">
                                         <span class="sr-only">#</span>
                                     </th>
@@ -124,25 +124,25 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200">
                                 <tr
-                                    v-for="(role, index) in roles.data" :key="index"
+                                    v-for="(permission, index) in permissions.data" :key="index"
                                 >
                                     <td class="px-6 py-4 whitespace-nowrap">
                                         <div class="text-sm font-medium text-gray-900 uppercase">
                                             <Link
                                                 :href="
                                                     route(
-                                                        'admin.roles.edit',
-                                                        role.id
+                                                        'admin.permissions.edit',
+                                                        permission.id
                                                     )
                                                 "
                                             >
-                                                {{ role.name }}
+                                                {{ permission.name }}
                                             </Link>
                                         </div>
                                     </td>
-                                    <td class="px-6 py-4 whitespace-normal hidden lg:table-cell">
+                                    <td class="px-6 py-4 whitespace-nowrap hidden lg:table-cell">
                                         <div class="text-sm text-gray-900">
-                                            <span v-for="role_has_permission in role.role_has_permissions" v-bind:key="role_has_permission.permissions.id">
+                                            <span v-for="role_has_permission in permission.role_has_permissions" v-bind:key="role_has_permission.roles.id">
                                                 <!-- <span> -->
                                                 <div
                                                     class="
@@ -156,7 +156,7 @@
                                                         bg-yellow-200
                                                     "
                                                 >
-                                                    {{ role_has_permission.permissions.name }}
+                                                    {{ role_has_permission.roles.name }}
                                                 </div>
                                             </span>
                                         </div>
@@ -166,13 +166,13 @@
                                             <!-- delete data -->
                                             <div
                                                 v-if="
-                                                    role.name !==
+                                                    permission.name !==
                                                     'admin'
                                                 "
                                             >
                                                 <button
-                                                        @click="deleteData(role)"
-                                                        v-show="role.id"
+                                                        @click="deleteData(permission)"
+                                                        v-show="permission.id"
                                                         class="
                                                             text-red-700
                                                             hover:text-red-900 mr-2 print:hidden
@@ -201,8 +201,8 @@
                                             <Link
                                                 :href="
                                                     route(
-                                                        'admin.roles.edit',
-                                                        role.id
+                                                        'admin.permissions.edit',
+                                                        permission.id
                                                     )
                                                 " class = "print:hidden"
                                             >
@@ -234,7 +234,7 @@
             </div>
         </div>
 
-        <!-- <div v-for="(role, index) in roles.data" :key="index">
+        <!-- <div v-for="(permission, index) in permissions.data" :key="index">
 
         </div> -->
 
@@ -242,14 +242,14 @@
         <div class="bg-white px-3 py-1 flex items-center justify-between border-t border-gray-200 sm:px-3">
             <!-- button -->
             <div class="flex-1 flex justify-between sm:hidden">
-                <button class="btn-pagination" :disabled="roles.current_page <= 1"
-                    @click.prevent="paginate(roles.current_page - 1)"
+                <button class="btn-pagination" :disabled="permissions.current_page <= 1"
+                    @click.prevent="paginate(permissions.current_page - 1)"
                 >
                     Previous
                 </button>
 
-                <button class="btn-pagination" :disabled="roles.current_page >= roles.last_page"
-                    @click.prevent="paginate(roles.current_page + 1)"
+                <button class="btn-pagination" :disabled="permissions.current_page >= permissions.last_page"
+                    @click.prevent="paginate(permissions.current_page + 1)"
                 >
                     Next
                 </button>
@@ -261,15 +261,15 @@
                     <p class="text-sm leading-5 text-gray-700">
                         Showing
                         <span class="font-medium">
-                            {{ roles.from }}
+                            {{ permissions.from }}
                         </span>
                         to
                         <span class="font-medium">
-                            {{ roles.to }}
+                            {{ permissions.to }}
                         </span>
                         of
                         <span class="font-medium">
-                            {{ roles.total }}
+                            {{ permissions.total }}
                         </span>
                         result
                     </p>
@@ -278,11 +278,11 @@
                 <!-- menampilkan pagination -->
                 <pagination
                     :current_page="current_page"
-                    :total="roles.total"
-                    :per_page="roles.per_page"
-                    :last_page="roles.last_page"
-                    :from="roles.from"
-                    :to="roles.to"
+                    :total="permissions.total"
+                    :per_page="permissions.per_page"
+                    :last_page="permissions.last_page"
+                    :from="permissions.from"
+                    :to="permissions.to"
                     @paginate="paginate"
                     :offset="4"
                 >
@@ -304,7 +304,7 @@ import SortIndicator from "@/Components/SortIndicator.vue";
 
 export default {
     created () {
-        document.title = "Roles";
+        document.title = "Permissions";
     },
     components: {
         Link,
@@ -316,14 +316,14 @@ export default {
     },
     props: {
         filters: Object,
-        roles: Object,
+        permissions: Object,
     },
     data() {
         return{
-            current_page: this.roles.current_page,
+            current_page: this.permissions.current_page,
             form: {
                 search: this.filters.search,
-                per_page: this.roles.per_page,
+                per_page: this.permissions.per_page,
                 page: this.filters.page,
                 sort_by: this.filters.sort_by,
                 sort_dir: this.filters.sort_dir ?? "asc",
@@ -338,21 +338,21 @@ export default {
             handler: _.throttle(function () {
                 let query = _.pickBy(this.form);
                 this.$inertia.get(
-                    this.route("admin.roles.index"),
+                    this.route("admin.permissions.index"),
                     Object.keys(query).length ? query : { remember: "forget" },
                     { preserveState: true }
                 );
             }, 300),
             deep: true,
         },
-        roles(roles) {
-            this.current_page = roles.current_page;
+        permissions(permissions) {
+            this.current_page = permissions.current_page;
         }
     },
     methods: {
         deleteData(data) {
             if (!confirm("Are you sure want to delete this?")) return;
-            this.formDelete.post(this.route("admin.roles.destroy", data.id));
+            this.formDelete.post(this.route("admin.permissions.destroy", data.id));
         },
         reset() {
             this.form = _.mapValues(this.form, () => null);

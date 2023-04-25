@@ -13,7 +13,7 @@
 
 export default {
     created() {
-        document.title = "Test1";
+        document.title = "Dashboard";
     },
     components: {
         AdminLayout,

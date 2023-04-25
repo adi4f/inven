@@ -1,0 +1,26 @@
+
+
+<template>
+    <admin-layout>
+         Index branch
+    </admin-layout>
+ </template>
+ 
+ <script>
+     import { useForm } from '@inertiajs/inertia-vue3';
+     import { Link } from '@inertiajs/inertia-vue3';
+     import AdminLayout from '@/Layouts/AdminLayout.vue';
+ 
+ export default {
+     created() {
+         document.title = "Branch";
+     },
+     components: {
+         AdminLayout,
+         Link
+     },
+ }
+ </script>
+ 
+ 
+ 

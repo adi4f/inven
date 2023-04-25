@@ -1,17 +1,27 @@
 <?php
 
-namespace App\Http\Controllers\Admins;
+namespace App\Http\Controllers\Masters;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Request;
 
-use App\Models\Company;
+use App\Models\Masters\Company;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Middleware\Authorize;
 
 class CompanyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:company read', ['only' => ['index', 'show']]);
+        $this->middleware('can:company create', ['only' => ['create', 'store']]);
+        $this->middleware('can:company update', ['only' => ['edit', 'update']]);
+        $this->middleware('can:company delete', ['only' => ['destroy']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +34,14 @@ class CompanyController extends Controller
             $query = $query->orderBy(Request::input('sort_by'), Request::input('sort_dir', 'asc'));
         }
 
-        return Inertia::render('Admins/Companys/index', [
+        return Inertia::render('Masters/Companys/index', [
             'filters' => Request::all('search', 'per_page', 'sort_by', 'sort_dir'),
-            'companys' => $query->paginate(Request::input('per_page', 5))
+            'companys' => $query->paginate(Request::input('per_page', 5)),
+            'can' => [
+                'create' => Auth::user()->can('company create'),
+                'update' => Auth::user()->can('company update'),
+                'delete' => Auth::user()->can('company delete'),
+            ]
         ]);
     }
 
@@ -37,7 +52,7 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Admins/Companys/create');
+        return Inertia::render('Masters/Companys/create');
     }
 
     /**
@@ -69,7 +84,7 @@ class CompanyController extends Controller
             'fax' => Request::get('fax'),
         ]);
 
-        return Redirect::route('admin.companys.index');
+        return Redirect::route('companys.index');
     }
 
     /**
@@ -91,7 +106,7 @@ class CompanyController extends Controller
      */
     public function edit(Company $company)
     {
-        return Inertia::render('Admins/Companys/edit', [
+        return Inertia::render('Masters/Companys/edit', [
             'editData' => [
                 'id' => $company->id,
                 'initial' => $company->initial,
@@ -106,6 +121,10 @@ class CompanyController extends Controller
                 'telephone' => $company->telephone,
                 'fax' => $company->fax,
             ],
+            'can' => [
+                'update' => Auth::user()->can('company update'),
+                'delete' => Auth::user()->can('company delete'),
+            ]
         ]);
     }
 
@@ -139,7 +158,7 @@ class CompanyController extends Controller
             'fax' => Request::get('fax'),
         ]);
 
-        return Redirect::route('admin.companys.index');
+        return Redirect::route('companys.index');
     }
 
     /**
@@ -152,6 +171,6 @@ class CompanyController extends Controller
     {
         $company->delete();
         
-        return Redirect::route('admin.companys.index');
+        return Redirect::route('companys.index');
     }
 }
